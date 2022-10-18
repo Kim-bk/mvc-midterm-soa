@@ -1,0 +1,46 @@
+@model List<OrderType>;
+@{
+    ViewData["Name"] = "Product Create Page";
+    var orderTypes = Model;
+    var news = ViewBag.Order;
+}
+<h1 class="display-4">Product Create Page</h1>
+<form action="/Order/Save" method="POST">
+    <div class="form-group">
+        <label for="Id">Id</label>
+        <input type="text" class="form-control" id="Id" name="Id" value="@news.Id" readonly="readonly">
+    </div>
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@news.Name">
+    </div>
+    <div class="form-group">
+        <label for="OrderCode">OrderCode</label>
+        <input type="text" class="form-control" id="OrderCode" name="OrderCode" value="@news.OrderCode">
+    </div>
+    <div class="form-group">
+        <label for="CustomerEmail">CustomerEmail</label>
+        <input type="text" class="form-control" id="CustomerEmail" name="CustomerEmail" value="@news.CustomerEmail">
+    </div>
+    <div class="form-group">
+        <label for="Image">Image</label>
+        <input type="text" class="form-control" id="Image" name="Image" value="@news.Image">
+    </div>
+    <div class="form-group">
+        <label for="OrderType">OrderType</label>
+        <select class="form-control" id="OrderTypeId" name="OrderTypeId">
+            @foreach (var orderType in orderTypes)
+            {
+                @if (orderType.OrderTypeId == news.OrderTypeId)
+                {
+                    <option value="@orderType.OrderTypeId" selected="selected">@orderType.OrderTypeName</option>
+                }
+                else
+                {
+                    <option value="@orderType.OrderTypeId">@orderType.OrderTypeName</option>
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
