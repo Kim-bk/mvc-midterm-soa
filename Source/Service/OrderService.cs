@@ -22,7 +22,9 @@ namespace ProductManager.Service
         }
         public List<Order> SearchOrder(string searchingString)
         {
-            return  _context.Orders.Where(s => s.Name!.Contains(searchingString)).ToList();
+            return _context.Orders.Where(s => s.Name!.Contains(searchingString) 
+                                    || s.CustomerEmail!.Contains(searchingString)
+                                    || s.OrderCode!.Contains(searchingString)).ToList();
         }
         public void CreateOrder(Order Order)
         {
@@ -89,6 +91,19 @@ namespace ProductManager.Service
             return  from m in _context.Orders
                     orderby m.OrderType!.OrderTypeName
                     select m.OrderType!.OrderTypeName;
+        }
+
+        public List<Order> GetOrderByOptions(string option)
+        {
+            if (option.Equals("Theo tên"))
+            {
+                return _context.Orders.OrderByDescending(n => n.Name).ToList();
+            }    
+
+            else 
+            {
+                return _context.Orders.OrderByDescending(n => n.OrderType!.OrderTypeName).ToList();
+            }    
         }
     }
 }

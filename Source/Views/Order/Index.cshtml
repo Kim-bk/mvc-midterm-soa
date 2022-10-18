@@ -4,15 +4,20 @@
     ViewData["Title"] = "Bills Page";
     var orders = Model.Orders!;
     var orderTypeToSelect = Model.OrderTypes;
+    var optionsToSelect = Model.Options;
     var typeNewName = ViewBag.typeNewName;
 }
 @using ProductManager.Models;
 <div class="text-center">
-    <h1 class="display-4">Welcome To Orders Page</h1>
-    <form asp-controller="New" asp-action="Index">  
+    <h1 class="display-4">Welcome To Bills Page</h1>
+    <form asp-controller="Order" asp-action="Index">  
         <p>
             <select asp-for="TypeGenre" asp-items="orderTypeToSelect">
                     <option value="">All</option>
+            </select>
+
+            <select asp-for="OptionsGenre" asp-items="optionsToSelect">
+                <option value="">All</option>
             </select>
 
             Search: <input type="text" name="searchString" />
@@ -20,7 +25,7 @@
         </p>
     </form>
 
-    <table class="table">
+    <table class="table">`
         <thead>
             <th>Id</th>
             <th>Name</th>

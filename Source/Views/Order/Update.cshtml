@@ -1,6 +1,6 @@
 @model List<OrderType>;
 @{
-    ViewData["Name"] = "Product Create Page";
+    ViewData["Name"] = "Bills Create Page";
     var orderTypes = Model;
     var news = ViewBag.Order;
 }
@@ -13,10 +13,6 @@
     <div class="form-group">
         <label for="Name">Name</label>
         <input type="text" class="form-control" id="Name" name="Name" value="@news.Name">
-    </div>
-    <div class="form-group">
-        <label for="OrderCode">OrderCode</label>
-        <input type="text" class="form-control" id="OrderCode" name="OrderCode" value="@news.OrderCode">
     </div>
     <div class="form-group">
         <label for="CustomerEmail">CustomerEmail</label>

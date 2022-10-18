@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductManager.Service;
 using ProductManager.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace ProductManager.Controllers
 {
@@ -13,28 +14,45 @@ namespace ProductManager.Controllers
         {
            _orderService = Orderservice;
         }
-        public IActionResult Index(string typeGenre, string searchString)
+        public IActionResult Index(string typeGenre, string searchString, string optionsGenre)
         {
-            // Use LINQ to get list of TypeOrder.
-            var genreQuery = _orderService.GetQueryType();
+            var optionList = new List<string>();
+            optionList.Add("Theo tên");
+            optionList.Add("Theo loại");
 
+            var genreQuery = _orderService.GetQueryType().Distinct();
+            var orderViewModel = new OrderViewModel();
             var orderView = _orderService.GetOrders();
-            var typeOrders = _orderService.GetTypeOrder();
+            orderViewModel.Orders = orderView;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 orderView = _orderService.SearchOrder(searchString);
+                orderViewModel.Orders = orderView;
             }
 
             if (!string.IsNullOrEmpty(typeGenre))
             {
                 orderView = _orderService.GetOrderByType(typeGenre);
+                orderViewModel.Orders = orderView;
+                
+            }
+            if (!string.IsNullOrEmpty(optionsGenre))
+            {
+                orderView = _orderService.GetOrderByOptions(optionsGenre);
+                orderViewModel.Orders = orderView;
+
             }
 
-            var orderViewModel = new OrderViewModel
+
+            /*var orderViewModel = new OrderViewModel
             {
                 Orders = orderView,
                 OrderTypes = new SelectList(genreQuery)
-            };
+            };*/
+
+            orderViewModel.OrderTypes = new SelectList(genreQuery);
+            orderViewModel.Options = new SelectList(optionList);
             return View(orderViewModel);
         }
         public IActionResult Create()

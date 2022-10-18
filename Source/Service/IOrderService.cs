@@ -11,6 +11,7 @@ namespace ProductManager.Service
         IQueryable<string> GetQueryType();
         List<Order> SearchOrder(string searchingString);
         List<Order> GetOrderByType(string typeOrder);
+        List<Order> GetOrderByOptions(string option);
         List<Order> GetOrders();
         Order? GetOrderById(int id);
 
